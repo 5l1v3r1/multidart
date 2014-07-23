@@ -1,0 +1,18 @@
+------WebKitFormBoundaryj4ThXXSLZKddXVWh
+Content-Disposition: form-data; name="image"; filename="main.c"
+Content-Type: application/octet-stream
+
+int main(int argc) {
+  printf("got %d arguments\n", argc);
+  return 0;
+}
+
+------WebKitFormBoundaryj4ThXXSLZKddXVWh
+Content-Disposition: form-data; name="menu-name"
+
+Alux
+------WebKitFormBoundaryj4ThXXSLZKddXVWh
+Content-Disposition: form-data; name="file-name"
+
+alux.iso
+------WebKitFormBoundaryj4ThXXSLZKddXVWh--
