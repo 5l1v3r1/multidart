@@ -1,28 +1,31 @@
 part of multidart;
 
-class _MultipartHeaders extends _MultipartState {
+class _HeadersPhase extends _Phase {
   List<int> currentLine;
-  Map<String, HeaderValue> headers;
+  final Map<String, HeaderValue> headers;
   
-  _MultipartHeaders(MultipartStream s) : super(s), currentLine = [] {
-    headers = new Map<String, HeaderValue>();
+  _HeadersPhase(MultipartStream s) : super(s), headers = new Map() {
+    currentLine = null;
   }
   
   _Delimiter get delimiter => new _SingleDelimiter([13, 10]); // \r\n
   
   void handleData(List<int> body) {
-    currentLine.addAll(body);
+    if (currentLine == null) {
+      currentLine = body;
+    } else {
+      currentLine.addAll(body);
+    }
   }
   
-  _MultipartState handleDelimiter(List<int> delimiter) {
-    if (currentLine.length == 0) {
-      var newState = new _MultipartBody(this);
-      stream._controller.add(newState.partInfo);
-      return newState;
+  _Phase handleDelimiter(List<int> delimiter) {
+    if (currentLine == null) {
+      stream._controller.add(new MultipartDatum.fromHeaders(headers));
+      return new _BodyPhase(stream);
     }
     
     String line = new String.fromCharCodes(currentLine);
-    currentLine = <int>[];
+    currentLine = null;
     
     int index = line.indexOf(':');
     if (index < 0) {

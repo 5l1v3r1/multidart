@@ -22,15 +22,30 @@ main() {
 }
 
 testFileUpload() {
+  Map<String, String> fields = new Map();
+  String currentName = null;
+  
   new File('sample_req.txt').readAsString().then((str) {
     return str.replaceAll('\n', '\r\n').codeUnits;
   }).then((buffer) {
     var input = new StaticStream(buffer).stream;
     String boundary = '------WebKitFormBoundaryj4ThXXSLZKddXVWh';
-    input.transform(new MultipartTransformer(boundary)).listen((x) {
-      print("got part");
+    var transformer = new MultipartTransformer(boundary);
+    input.transform(transformer).listen((MultipartDatum x) {
+      if (!x.isData) {
+        String name = x.headers['content-disposition'].parameters['name'];
+        currentName = name;
+        fields[name] = '';
+      } else {
+        fields[currentName] += new String.fromCharCodes(x.data);
+      }
     }, onError: (e) {
       print("got error: $e");
+    }, onDone: () {
+      assert(fields['menu-name'] == 'Alux');
+      assert(fields['file-name'] == 'alux.iso');
+      print('passed!');
+      // the `image` field is just so annoying to get as a String with \r\n
     });
   });
 }

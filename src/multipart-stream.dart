@@ -7,20 +7,23 @@ List<int> _boundaryToList(String str) {
 }
 
 class MultipartStream {
-  final Stream<List<int>> _source;
   final List<int> _boundary;
+  final Stream<List<int>> _source;
+  
   List<int> _buffer;
+  _Phase _phase;
+  bool _shouldCancel;
   
-  MultipartState _state;
-  
-  StreamController<MultipartPart> _controller;
+  StreamController<MultipartDatum> _controller;
   StreamSubscription _sourceSubscription;
   
-  Stream<HttpMultipartPart> get stream => _controller.stream;
+  Stream<MultipartDatum> get stream => _controller.stream;
 
   MultipartStream(String boundary, this._source) :
-      _boundary = _boundaryToList(boundary), _buffer = <int>[] {
-    _state = new _MultipartInit(this);
+      _boundary = _boundaryToList(boundary) {
+    _buffer = <int>[];
+    _phase = new _InitPhase(this);
+    _shouldCancel = false;
     _controller = new StreamController(onListen: _onListen, onPause: _onPause,
         onResume: _onResume, onCancel: _onCancel);
   }
@@ -39,6 +42,7 @@ class MultipartStream {
   }
   
   _onCancel() {
+    _controller.close();
     _sourceSubscription.cancel();
   }
   
@@ -60,8 +64,8 @@ class MultipartStream {
   _processBuffer() {
     try {
       while (_buffer.length > 0) {
-        _state = _state.processBuffer();
-        if (_state != null) continue;
+        _phase = _phase.processBuffer();
+        if (_phase != null) continue;
         
         if (_buffer.length != 0) {
           throw new MultipartError('got excess data');
