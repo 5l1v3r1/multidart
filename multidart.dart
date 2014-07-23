@@ -1,7 +1,9 @@
 library multidart;
 
 import 'dart:async';
+import 'dart:io'; // for HeaderValue
 
+part 'src/delimiter.dart';
 part 'src/multipart-error.dart';
 part 'src/multipart-state.dart';
 part 'src/multipart-init.dart';

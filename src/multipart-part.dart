@@ -1,5 +1,9 @@
 part of multidart;
 
 class MultipartPart {
-  // here will be fields
+  final StreamController<MultipartPart> _controller;
+  Stream<MultipartPart> get stream => _controller.stream;
+  
+  MultipartPart() : _controller = new StreamController<MultipartPart>() {
+  }
 }

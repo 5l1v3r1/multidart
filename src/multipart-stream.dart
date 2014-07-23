@@ -9,11 +9,11 @@ List<int> _boundaryToList(String str) {
 class MultipartStream {
   final Stream<List<int>> _source;
   final List<int> _boundary;
-  final List<int> _buffer;
+  List<int> _buffer;
   
   MultipartState _state;
   
-  StreamController<HttpMultipartPart> _controller;
+  StreamController<MultipartPart> _controller;
   StreamSubscription _sourceSubscription;
   
   Stream<HttpMultipartPart> get stream => _controller.stream;
@@ -48,7 +48,7 @@ class MultipartStream {
   }
   
   _onDone() {
-    // TODO: here, verify that we are actually done
+    _controller.addError(new MultipartError('premature end of stream'));
     _controller.close();
   }
   
@@ -61,6 +61,15 @@ class MultipartStream {
     try {
       while (_buffer.length > 0) {
         _state = _state.processBuffer();
+        if (_state != null) continue;
+        
+        if (_buffer.length != 0) {
+          throw new MultipartError('got excess data');
+        }
+        _controller.close();
+        // TODO: see if the source may still send us an annoyind onDone().
+        _sourceSubscription.cancel();
+        return;
       }
     } catch(e, s) {
       _sourceSubscription.cancel();
