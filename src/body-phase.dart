@@ -16,7 +16,7 @@ class _BodyPhase extends _Phase {
   _Delimiter get delimiter => theDelimiter;
   
   void handleData(List<int> body) {
-    stream._controller.add(new MultipartDatum.fromData(body));
+    stream._controller.add(new Datum.fromData(body));
   }
   
   _Phase handleDelimiter(List<int> delimiter) {

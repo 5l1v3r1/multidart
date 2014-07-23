@@ -30,8 +30,8 @@ testFileUpload() {
   }).then((buffer) {
     var input = new StaticStream(buffer).stream;
     String boundary = '------WebKitFormBoundaryj4ThXXSLZKddXVWh';
-    var transformer = new MultipartTransformer(boundary);
-    input.transform(transformer).listen((MultipartDatum x) {
+    var transformer = new DatumTransformer(boundary);
+    input.transform(transformer).listen((Datum x) {
       if (!x.isData) {
         String name = x.headers['content-disposition'].parameters['name'];
         currentName = name;

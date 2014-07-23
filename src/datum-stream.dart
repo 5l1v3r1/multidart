@@ -6,7 +6,7 @@ List<int> _boundaryToList(String str) {
   return charCodes;
 }
 
-class MultipartStream {
+class DatumStream {
   final List<int> _boundary;
   final Stream<List<int>> _source;
   
@@ -14,12 +14,12 @@ class MultipartStream {
   _Phase _phase;
   bool _shouldCancel;
   
-  StreamController<MultipartDatum> _controller;
+  StreamController<Datum> _controller;
   StreamSubscription _sourceSubscription;
   
-  Stream<MultipartDatum> get stream => _controller.stream;
+  Stream<Datum> get stream => _controller.stream;
 
-  MultipartStream(String boundary, this._source) :
+  DatumStream(String boundary, this._source) :
       _boundary = _boundaryToList(boundary) {
     _buffer = <int>[];
     _phase = new _InitPhase(this);
@@ -63,7 +63,7 @@ class MultipartStream {
   
   _processBuffer() {
     try {
-      while (_buffer.length > 0) {
+      while (_shouldProcess()) {
         _phase = _phase.processBuffer();
         if (_phase != null) continue;
         
@@ -80,6 +80,11 @@ class MultipartStream {
       _controller.addError(e, s);
       _controller.close();
     }
+  }
+  
+  bool _shouldProcess() {
+    return _buffer.length > 0 && !_controller.isPaused &&
+        !_controller.isClosed;
   }
 
 }

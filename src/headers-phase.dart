@@ -4,7 +4,7 @@ class _HeadersPhase extends _Phase {
   List<int> currentLine;
   final Map<String, HeaderValue> headers;
   
-  _HeadersPhase(MultipartStream s) : super(s), headers = new Map() {
+  _HeadersPhase(DatumStream s) : super(s), headers = new Map() {
     currentLine = null;
   }
   
@@ -20,7 +20,7 @@ class _HeadersPhase extends _Phase {
   
   _Phase handleDelimiter(List<int> delimiter) {
     if (currentLine == null) {
-      stream._controller.add(new MultipartDatum.fromHeaders(headers));
+      stream._controller.add(new Datum.fromHeaders(headers));
       return new _BodyPhase(stream);
     }
     
