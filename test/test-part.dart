@@ -19,7 +19,6 @@ main() {
 testFileUpload(Stream stream, String program) {
   Completer completer = new Completer();
   Map<String, String> fields = new Map();
-  String currentName = null;
   
   String boundary = '------WebKitFormBoundaryj4ThXXSLZKddXVWh';
   var transformer = new PartTransformer(boundary);
