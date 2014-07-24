@@ -42,6 +42,7 @@ class Part {
   }
   
   void _onCancel() {
+    if (this != _owner._currentPart) return;
     _owner._rawSubscription.cancel();
     _owner._controller.close();
   }
