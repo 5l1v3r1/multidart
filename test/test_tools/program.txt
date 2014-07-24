@@ -1,0 +1,4 @@
+int main(int argc) {
+  printf("got %d arguments\n", argc);
+  return 0;
+}

@@ -31,7 +31,6 @@ class PartStream {
   }
   
   void _onData(Datum x) {
-    print('got datum $x');
     if (x.isData) {
       assert(_currentPart != null);
       _currentPart._controller.add(x.data);
@@ -43,7 +42,6 @@ class PartStream {
     }
     // see if we should terminate
     if (shouldCancel) {
-      print("should cancel");
       _rawSubscription.cancel();
       _controller.close();
       return;
@@ -58,7 +56,6 @@ class PartStream {
       _controller.close();
       return;
     }
-    print("adding new guy");
     // wait for the part to be listen()'d before we continue to send data
     _rawSubscription.pause();
     _controller.add(_currentPart);
