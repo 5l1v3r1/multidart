@@ -1,0 +1,5 @@
+name: multidart
+version: 0.0.1
+author: Alex Nichol <unixpickle@gmail.com>
+description: A lightweight HTTP multipart parser for Dart.
+homepage: http://github.com/unixpickle/multidart
