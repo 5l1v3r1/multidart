@@ -40,6 +40,21 @@ class Part {
    */
   final ContentType contentType;
   
+  /**
+   * If you receive a [Part] object from a [PartTransformer], you may read its
+   * headers and realize you want to abort the request.
+   * 
+   * Without this method, you would have to listen to [stream] and then cancel
+   * your subscription. This method essentially wraps that functionality. Note
+   * that you should only call this if you have not listened to [stream]
+   * already.
+   */
+  void cancel() {
+    _owner._rawSubscription.cancel();
+    _owner._controller.close();
+    _controller.close();
+  }
+  
   Part._fromStream(_headers, this._owner) :
       headers = _headers,
       contentDisposition = _headers['content-disposition'],

@@ -68,7 +68,7 @@ Future testFailureRequest(List<int> body, ErrorValidator validator,
   Completer completer = new Completer();
   Stream stream = new StaticStream(body, atOnce: atOnce).stream;
   
-  String boundary = '------boundary';
+  String boundary = '----boundary';
   var transformer = new PartTransformer(boundary);
   var sub;
   sub = stream.transform(transformer).listen((Part x) {

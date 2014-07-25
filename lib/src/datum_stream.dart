@@ -1,7 +1,7 @@
 part of multidart;
 
 List<int> _boundaryToList(String str) {
-  var charCodes = new List<int>.from(str.codeUnits);
+  var charCodes = new List<int>.from(('--' + str).codeUnits);
   charCodes.addAll('\r\n'.codeUnits);
   return charCodes;
 }

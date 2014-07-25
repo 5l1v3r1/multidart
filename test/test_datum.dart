@@ -21,7 +21,7 @@ Future testFileUpload(Stream stream, String program) {
   Map<String, String> fields = new Map();
   String currentName = null;
   
-  String boundary = '------WebKitFormBoundaryj4ThXXSLZKddXVWh';
+  String boundary = '----WebKitFormBoundaryj4ThXXSLZKddXVWh';
   var transformer = new DatumTransformer(boundary);
   stream.transform(transformer).listen((Datum x) {
     if (!x.isData) {

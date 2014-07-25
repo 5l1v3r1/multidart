@@ -20,7 +20,7 @@ testFileUpload(Stream stream, String program) {
   Completer completer = new Completer();
   Map<String, String> fields = new Map();
   
-  String boundary = '------WebKitFormBoundaryj4ThXXSLZKddXVWh';
+  String boundary = '----WebKitFormBoundaryj4ThXXSLZKddXVWh';
   var transformer = new PartTransformer(boundary);
   stream.transform(transformer).listen((Part x) {
     String value = '';
