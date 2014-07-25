@@ -25,7 +25,7 @@ class Part {
     _controller = new StreamController(onListen: _onListen, onPause: _onPause,
         onResume: _onResume, onCancel: _onCancel);
     if (contentDisposition == null) {
-      throw new MultipartError('part missing content-disposition header.');
+      throw new MultipartError('part missing content-disposition header');
     }
   }
   
