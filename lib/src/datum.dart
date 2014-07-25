@@ -18,7 +18,7 @@ class Datum {
   final Map<String, HeaderValue> headers;
   
   /**
-   * `true` if this is a data packet, false if it is a header packet.
+   * `true` if this is a data packet, `false` if it is a header packet.
    */
   final bool isData;
   

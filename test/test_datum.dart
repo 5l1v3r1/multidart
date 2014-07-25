@@ -1,4 +1,4 @@
-import '../multidart.dart';
+import '../lib/multidart.dart';
 import 'test_tools/test_tools.dart';
 import 'dart:async';
 

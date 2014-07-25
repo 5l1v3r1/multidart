@@ -1,7 +1,7 @@
 part of multidart;
 
 /**
- * A StreamTransformer that converts a binary stream to a stream of [Datum]
+ * A [StreamTransformer] that converts a binary stream to a stream of [Datum]
  * objects.
  */
 class DatumTransformer implements
