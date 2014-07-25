@@ -4,7 +4,7 @@ class _HeadersPhase extends _Phase {
   List<int> currentLine;
   final Map<String, HeaderValue> headers;
   
-  _HeadersPhase(DatumStream s) : super(s), headers = new Map() {
+  _HeadersPhase(_DatumStream s) : super(s), headers = new Map() {
     currentLine = null;
   }
   

@@ -6,15 +6,38 @@ ContentType _parseContentType(Map<String, HeaderValue> headers) {
   return ContentType.parse(raw.toString());
 }
 
+/**
+ * A streamable object which represents a part in a multipart stream.
+ */
 class Part {
   StreamController<List<int>> _controller;
-  final PartStream _owner;
+  final _PartStream _owner;
   
+  /**
+   * The stream of data contained in this multipart section.
+   */
   Stream<List<int>> get stream => _controller.stream;
   
+  /**
+   * The headers preceding this multipart section.
+   */
   final Map<String, HeaderValue> headers;
+  
+  /**
+   * The content disposition header of the multipart section. Since the
+   * multipart specification mandates this be present, this is guaranteed not to
+   * be `null`.
+   */
   final HeaderValue contentDisposition;
+  
+  /**
+   * The content transfer encoding header, or `null`.
+   */
   final HeaderValue contentTransferEncoding;
+  
+  /**
+   * The parsed content type, or `null`.
+   */
   final ContentType contentType;
   
   Part._fromStream(_headers, this._owner) :

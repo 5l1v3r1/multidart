@@ -6,7 +6,10 @@ List<int> _boundaryToList(String str) {
   return charCodes;
 }
 
-class DatumStream {
+/**
+ * A wrapper around a binary stream that emits [Datum] objects.
+ */
+class _DatumStream {
   final List<int> _boundary;
   final Stream<List<int>> _source;
   
@@ -19,7 +22,10 @@ class DatumStream {
   
   Stream<Datum> get stream => _controller.stream;
 
-  DatumStream(String boundary, this._source) :
+  /**
+   * Create a new [_DatumStream] given a multipart boundary and a binary stream
+   */
+  _DatumStream(String boundary, this._source) :
       _boundary = _boundaryToList(boundary) {
     _buffer = <int>[];
     _phase = new _InitPhase(this);

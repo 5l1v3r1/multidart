@@ -1,12 +1,12 @@
 part of multidart;
 
 /**
- * A [_Phase] is used in a loop by a [DatumStream] to process data. A phase
+ * A [_Phase] is used in a loop by a [_DatumStream] to process data. A phase
  * can force a phase transition, in which case it returns a new [_Phase] object
  * to take future data events. 
  */
 abstract class _Phase {
-  final DatumStream stream;
+  final _DatumStream stream;
   
   List<int> delimiterBody;
   bool processingDelimiter;

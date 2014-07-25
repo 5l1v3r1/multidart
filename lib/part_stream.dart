@@ -1,16 +1,26 @@
 part of multidart;
 
-class PartStream {
+/**
+ * A wrapper around a `Stream<Datum>` that produces [Part] objects.
+ */
+class _PartStream {
   final Stream<Datum> _rawStream; 
   StreamSubscription<Datum> _rawSubscription;
   
   StreamController<Part> _controller;
+  
+  /**
+   * The output stream of [Part] objects
+   */
   Stream<Part> get stream => _controller.stream;
   
   Part _currentPart;
   bool shouldCancel;
   
-  PartStream(this._rawStream) {
+  /**
+   * Create a part stream from an underlying [Datum] stream.
+   */
+  _PartStream(this._rawStream) {
     shouldCancel = false;
     _currentPart = null;
     _controller = new StreamController(onListen: _onListen, onCancel: _onCancel);
