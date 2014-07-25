@@ -50,3 +50,12 @@ This is one of the first pieces of Dart code I have ever written. Do not judge m
 # Status
 
 I have run some tests to make sure that this parser works properly. As far as performance is concerned, I do not expect it to be the best. The way the parser currently works, any carriage return in an uploaded file will cause a buffer flush, meaning that streamed byte arrays may be smaller than usual.
+parent `Stream<Part>` will be cancelled as well.
+
+# Disclaimer
+
+This is one of the first pieces of Dart code I have ever written. Do not judge me for it!
+
+# Status
+
+I have run some tests to make sure that this parser works properly. As far as performance is concerned, I do not expect it to be the best. The way the parser currently works, any carriage return in an uploaded file will cause a buffer flush, meaning that streamed byte arrays may be smaller than usual.
